@@ -1,0 +1,20 @@
+{
+  "name": "event-management",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/KevinDM15/event-management",
+  "author": "kevindm14",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}
