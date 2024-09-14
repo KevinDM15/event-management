@@ -1,6 +1,8 @@
 # Dependency directories
 /node_modules
 
+/sql
+
 # lock files
 yarn.lock
 package-lock.json

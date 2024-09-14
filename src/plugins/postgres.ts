@@ -9,13 +9,11 @@ import { dbConfig } from 'src/config/database/dbConfig';
  *
  */
 export default fp(async function (fastify: FastifyInstance) {
-  const { user, password, database } = dbConfig;
+  const { user, password, database, host, port } = dbConfig;
 
   await fastify.register(fastifyPostgres, {
-    connectionString: `postgres://${user}:${password}@localhost:5432/${database}`,
+    connectionString: `postgres://${user}:${password}@${host}:${[port]}/${database}`,
   });
 
   fastify.log.info('Postgres connected');
-
-  
 });
