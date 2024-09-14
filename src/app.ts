@@ -2,18 +2,17 @@ import * as path from 'path';
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import AutoLoad from '@fastify/autoload';
 
-export interface AppOptions {}
-
-export async function app(fastify: FastifyInstance, opts: AppOptions) {
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'plugins'),
-    options: { ...opts },
+export async function app(fastify: FastifyInstance) {
+  fastify.register(import('@fastify/swagger'));
+  fastify.register(import('@fastify/swagger-ui'), {
+    routePrefix: '/documentation'
   });
 
-  // This loads all plugins defined in routes
-  // define your routes in one of these
+  fastify.register(AutoLoad, {
+    dir: path.join(__dirname, 'plugins'),
+  });
+
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'routes'),
-    options: { ...opts },
   });
 }

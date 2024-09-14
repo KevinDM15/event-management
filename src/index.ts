@@ -1,7 +1,20 @@
 import fastify from 'fastify'
 import { app } from './app'
 
-const server = fastify({ logger: true })
+const server = fastify({
+  logger: {
+    transport: {
+      target: 'pino-pretty'
+    },
+    redact: {
+      paths: [
+        '[*].password',
+        '[*].user',
+      ],
+      censor: "***"
+    }
+  }
+})
 
 server.register(app)
 
