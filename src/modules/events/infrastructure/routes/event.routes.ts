@@ -1,8 +1,13 @@
 import { FastifyPluginAsync } from "fastify";
 
 const route: FastifyPluginAsync = async (fastify) => {
-  fastify.get("/", async () => fastify.eventsService.getEvents());
+  fastify.get("/", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
+  }, async () => fastify.eventsService.getEvents());
   fastify.post("/create", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
     schema: {
       body: {
         type: "object",
@@ -20,6 +25,8 @@ const route: FastifyPluginAsync = async (fastify) => {
   }, async (request) => fastify.eventsService.createEvent(request.body));
 
   fastify.put("/update/:id", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
     schema: {
       params: {
         type: "object",
@@ -44,6 +51,8 @@ const route: FastifyPluginAsync = async (fastify) => {
   }, async (request) => fastify.eventsService.updateEvent(request.params, request.body));
 
   fastify.delete("/delete/:id", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
     schema: {
       params: {
         type: "object",
