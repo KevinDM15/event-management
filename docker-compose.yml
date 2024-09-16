@@ -1,0 +1,31 @@
+version: '3'
+services:
+  fastify-app:
+    build: .
+    ports:
+      - '8080:8080'
+    volumes:
+      - .:/src
+      - /src/node_modules
+    command: yarn tsx src/server.ts
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+  postgresql:
+    container_name: postgresql
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRESQL_USER: ${POSTGRESQL_USER}
+      POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.postgresql.entrypoints=http'
