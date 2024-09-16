@@ -1,12 +1,11 @@
 export interface IEvent {
-  id: number;
+  id?: number;
   title: string;
   date: Date;
   startTime: string;
   endTime: string;
-  location: string;
   creatorId: number;
   locationId: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

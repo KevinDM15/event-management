@@ -12,7 +12,6 @@ export async function app(fastify: FastifyInstance) {
         description: "Events Management API",
         version: "1.0.0",
       },
-      consumes: ["application/json"],
       produces: ["application/json"],
       securityDefinitions: {
         BearerAuth: {
@@ -29,6 +28,8 @@ export async function app(fastify: FastifyInstance) {
   fastify.register(import("@fastify/swagger-ui"), {
     routePrefix: "/api-docs",
   });
+
+  fastify.register(import("@fastify/multipart"))
 
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, "plugins"),
