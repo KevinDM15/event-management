@@ -8,4 +8,5 @@ export interface EventRepository {
   delete(params: any): Promise<void>;
   findLocationByEventId(id: any): Promise<any>;
   registerUserToEvent(eventId: any, userId: any): Promise<any>;
+  getAssistants(eventId: any): Promise<any>;
 }

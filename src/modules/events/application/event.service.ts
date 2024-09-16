@@ -132,4 +132,16 @@ export class EventService {
 
     return this.eventRepository.registerUserToEvent(eventId, userId);
   }
+
+  async getAssistants(body: any): Promise<any> {
+    const assistants = []
+    const events = body.events
+
+    for (const event of events) {
+      const data = await this.eventRepository.getAssistants(event.event_id);
+      assistants.push(data);
+    }
+
+    return assistants;
+  }
 }

@@ -62,4 +62,26 @@ export class EventsHandlers implements EventRepository {
 
     return result.rows[0];
   }
+
+  async getAssistants(eventId: any) {
+    const assistants = await this.fastify.pg.query(
+      `
+        SELECT
+          TO_CHAR(e.date, 'Day') as day,
+          COUNT(ea.user_id) as assistants
+        FROM
+          events e
+        JOIN
+          event_attendees ea ON e.id = ea.event_id
+        WHERE e.id = $1
+        GROUP BY
+          TO_CHAR(e.date, 'Day')
+        ORDER BY
+          TO_CHAR(e.date, 'Day')
+      `,
+      [eventId]
+    )
+
+    return assistants.rows[0];
+  }
 }

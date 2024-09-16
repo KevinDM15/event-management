@@ -106,6 +106,16 @@ const route: FastifyPluginAsync = async (fastify) => {
       }
     },
   }, async (request) => fastify.eventsService.registerAssistance(request.body));
+
+  fastify.post("/get-assistants/", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
+    schema: {
+      body: {
+        type: "object",
+      }
+    },
+  }, async (request) => fastify.eventsService.getAssistants(request.body));
 }
 
 export default route;
