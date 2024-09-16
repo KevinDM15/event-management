@@ -53,4 +53,13 @@ export class EventsHandlers implements EventRepository {
 
     return location.rows[0];
   }
+
+  async registerUserToEvent(eventId: any, userId: any) {
+    const result = await this.fastify.pg.query(
+      `INSERT INTO event_attendees (event_id, user_id, register_assistant) VALUES ($1, $2, CURRENT_TIMESTAMP) RETURNING *`,
+      [eventId, userId]
+    )
+
+    return result.rows[0];
+  }
 }

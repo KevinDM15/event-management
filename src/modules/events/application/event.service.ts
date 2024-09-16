@@ -126,4 +126,10 @@ export class EventService {
 
     return locations;
   }
+
+  async registerAssistance(body: any): Promise<void> {
+    const { eventId, userId } = body;
+
+    return this.eventRepository.registerUserToEvent(eventId, userId);
+  }
 }

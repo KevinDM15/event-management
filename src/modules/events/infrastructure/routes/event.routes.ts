@@ -91,6 +91,21 @@ const route: FastifyPluginAsync = async (fastify) => {
       },
     },
   }, async (request) => fastify.eventsService.getLocationsAround(request.params));
+
+  fastify.post("/register-assistant", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
+    schema: {
+      body: {
+        type: "object",
+        properties: {
+          eventId: { type: "number" },
+          assistantId: { type: "number" },
+        },
+        required: ["eventId", "assistantId"],
+      }
+    },
+  }, async (request) => fastify.eventsService.registerAssistance(request.body));
 }
 
 export default route;
