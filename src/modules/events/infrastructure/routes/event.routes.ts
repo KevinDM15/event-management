@@ -5,6 +5,7 @@ const route: FastifyPluginAsync = async (fastify) => {
     // @ts-ignore
     preHandler: [fastify.authenticate],
   }, async () => fastify.eventsService.getEvents());
+
   fastify.post("/create", {
     // @ts-ignore
     preHandler: [fastify.authenticate],
@@ -23,6 +24,19 @@ const route: FastifyPluginAsync = async (fastify) => {
       }
     },
   }, async (request) => fastify.eventsService.createEvent(request.body));
+
+  fastify.post("/upload", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
+    schema: {
+      body: {
+        type: ['object', 'string'],
+        properties: {
+          file: { type: 'string', format: 'binary' },
+        },
+      },
+    }
+  }, async (request) => fastify.eventsService.uploadEvents(request));
 
   fastify.put("/update/:id", {
     // @ts-ignore

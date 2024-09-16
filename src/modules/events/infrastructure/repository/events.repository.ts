@@ -20,6 +20,17 @@ export class EventsHandlers implements EventRepository {
     return newEvent.rows[0];
   }
 
+  async uploadEvents(events: IEvent[]) {
+    const result = await this.fastify.pg.query(
+      `
+        INSERT INTO events (title, date, start_time, end_time, location_id, creator_id)
+        VALUES ${events.map((event) => `('${event.title}', '${event.date}', '${event.startTime}', '${event.endTime}', ${event.locationId}, ${event.creatorId})`).join(',')}
+      `
+    )
+
+    return result.rows;
+  }
+
   async update(params: any, body: any) {
     const event = body as IEvent;
     const updatedEvent = await this.fastify.pg.query(
