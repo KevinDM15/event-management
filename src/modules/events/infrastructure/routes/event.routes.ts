@@ -17,10 +17,10 @@ const route: FastifyPluginAsync = async (fastify) => {
           date: { type: "string" },
           startTime: { type: "string" },
           endTime: { type: "string" },
-          locationId: { type: "number" },
+          location: { type: "string" },
           creatorId: { type: "number" },
         },
-        required: ["title", "date", "startTime", "endTime", "locationId", "creatorId"],
+        required: ["title", "date", "startTime", "endTime", "location", "creatorId"],
       }
     },
   }, async (request) => fastify.eventsService.createEvent(request.body));
@@ -77,6 +77,20 @@ const route: FastifyPluginAsync = async (fastify) => {
       },
     },
   }, async (request) => fastify.eventsService.deleteEvent(request.params));
+
+  fastify.get("/get-locations-around/:id", {
+    // @ts-ignore
+    preHandler: [fastify.authenticate],
+    schema: {
+      params: {
+        type: "object",
+        properties: {
+          id: { type: "number" },
+        },
+        required: ["id"],
+      },
+    },
+  }, async (request) => fastify.eventsService.getLocationsAround(request.params));
 }
 
 export default route;

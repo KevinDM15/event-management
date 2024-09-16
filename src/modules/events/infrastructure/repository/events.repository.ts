@@ -44,4 +44,13 @@ export class EventsHandlers implements EventRepository {
   async delete(params: any) {
     await this.fastify.pg.query(`DELETE FROM events WHERE id = $1`, [params.id]);
   }
+
+  async findLocationByEventId(params: any) {
+    const location = await this.fastify.pg.query(
+      `SELECT * FROM events INNER JOIN locations ON events.location_id = locations.id WHERE events.id = $1`,
+      [params.id]
+    )
+
+    return location.rows[0];
+  }
 }
